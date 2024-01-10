@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import QApplication
 from main_screen import SuperMarketManagerment
 
 from Backend.DataBaseHandle import DataBase
-import build
+from UI import *
 
 class App:
     def __init__(self) -> None:
@@ -15,7 +15,6 @@ class App:
         self.app.aboutToQuit.connect(self.db.log_out)
         
     def run(self):
-        build.bulid_all()
         sys.exit(self.app.exec())
 
 App().run()

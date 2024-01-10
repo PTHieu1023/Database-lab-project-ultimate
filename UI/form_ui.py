@@ -920,8 +920,8 @@ class Ui_main_screen(object):
         self.horizontalLayout_4.setStretch(1, 7)
         self.horizontalLayout_4.setStretch(2, 2)
         self.gridLayout_4.addWidget(self.head_bar_2, 0, 0, 1, 2)
-        self.table_customer = QtWidgets.QWidget(parent=self.customer_view)
-        self.table_customer.setStyleSheet("QWidget{\n"
+        self.list_view = QtWidgets.QWidget(parent=self.customer_view)
+        self.list_view.setStyleSheet("QWidget{\n"
 "    background:rgb(188, 206, 253);\n"
 "    border-radius: 16px;\n"
 "}\n"
@@ -1020,15 +1020,15 @@ class Ui_main_screen(object):
 "    color: #fff;\n"
 "}\n"
 "")
-        self.table_customer.setObjectName("table_customer")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.table_customer)
+        self.list_view.setObjectName("list_view")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.list_view)
         self.horizontalLayout_2.setContentsMargins(0, 0, 32, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.tabel_customer = CustomTableView(parent=self.table_customer)
-        self.tabel_customer.setObjectName("tabel_customer")
-        self.horizontalLayout_2.addWidget(self.tabel_customer)
-        self.gridLayout_4.addWidget(self.table_customer, 1, 0, 1, 1)
+        self.table_customer = CustomTableView(parent=self.list_view)
+        self.table_customer.setObjectName("table_customer")
+        self.horizontalLayout_2.addWidget(self.table_customer)
+        self.gridLayout_4.addWidget(self.list_view, 1, 0, 1, 1)
         self.customer_detail_view = QtWidgets.QWidget(parent=self.customer_view)
         self.customer_detail_view.setStyleSheet("QTextEdit{\n"
 "    border: 1px solid rgb(112, 112, 112);\n"
@@ -1424,7 +1424,7 @@ class Ui_main_screen(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.btn_del_staff.setText(_translate("main_screen", "Delete"))
         self.btn_update_staff.setText(_translate("main_screen", "Update"))
-from CustomTableView import CustomTableView
+from .CustomWidgets.CustomTableView import CustomTableView
 
 
 if __name__ == "__main__":

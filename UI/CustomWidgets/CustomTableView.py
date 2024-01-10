@@ -199,7 +199,6 @@ class CustomTableView(QtWidgets.QWidget):
         super().__init__(parent)
         self.ui:CustomTableView_Form = CustomTableView_Form()
         self.ui.setupUi(self)
-
         self.data = []
         self.header = [str(i) for i in range(1, 11)]
         self.current_page = 1
@@ -260,15 +259,5 @@ class CustomTableView(QtWidgets.QWidget):
         self.current_page -= 1
         self.set_content()
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    table = CustomTableView()
-    table.show()
-    data_list = [
-    [f"Row {i+1}", f"Column 1 - {i}", f"Column 2 - {i}"]
-    for i in range(20001)]
-    header = ['1', '2', '3']
-    table.update_data(data=data_list, header=header)
-
-    sys.exit(app.exec())
+    def get_current_item(self):
+        return self.ui.table.selectedItems()

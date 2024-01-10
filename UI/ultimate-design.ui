@@ -1506,7 +1506,7 @@ QPushButton{
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QWidget" name="table_customer" native="true">
+           <widget class="QWidget" name="list_view" native="true">
             <property name="styleSheet">
              <string notr="true">QWidget{
 	background:rgb(188, 206, 253);
@@ -1625,7 +1625,7 @@ QPushButton:hover {
               <number>0</number>
              </property>
              <item>
-              <widget class="CustomTableView" name="tabel_customer" native="true"/>
+              <widget class="CustomTableView" name="table_customer" native="true"/>
              </item>
             </layout>
            </widget>

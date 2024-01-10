@@ -5,7 +5,7 @@ from UI.UI_Element_Controler import *
 from UI.form_ui import Ui_main_screen
 from popup import *
 
-from detail_info import *
+from Extentions.detail_info import *
 
 class SuperMarketManagerment(QWidget):
     def __init__(self, parent=None):
@@ -27,14 +27,8 @@ class SuperMarketManagerment(QWidget):
     def setupSlot(self):
         cui = self.ui
         self.general_view_controller.setupSlot()
-        cui.btn_order.toggled.connect(lambda:cui.stack_content_pages.setCurrentIndex(1))
-        cui.btn_product.toggled.connect(lambda:cui.stack_content_pages.setCurrentIndex(2))
         self.customer_view_controller.setupSlot()
         self.staff_view_controller.setupSlot()
-
-    
-    def on_open_dashboard(self):
-        pass
 
 
 class Controller:
@@ -81,13 +75,14 @@ class StaffViewController(Controller):
         self.ui.btn_staff.toggled.connect(self.on_open_staff_view)
         self.ui.btn_add_staff.clicked.connect(lambda:self.popup.show_popup())
         self.popup.inserted_record.connect(self.on_open_staff_view)
-        self.ui.table_staff.itemSelectionChanged.connect(self.view_detail_staff)
+        # self.ui.table_staff.itemSelectionChanged.connect(self.view_detail_staff)
+        self.ui.table_staff.ui.table.itemSelectionChanged.connect(self.view_detail_staff)
         self.ui.btn_del_staff.clicked.connect(self.delete_current_staff)
         self.ui.btn_update_staff.clicked.connect(self.update_current_staff)
         self.ui.txt_search_staff.textChanged.connect(self.on_open_staff_view)
     
     def get_current_staff_id(self):
-        selected_rows = self.ui.table_staff.selectedItems()
+        selected_rows = self.ui.table_staff.get_current_item()
         if not selected_rows:
             return None
         staff_id = selected_rows[0].text()
@@ -109,10 +104,10 @@ class StaffViewController(Controller):
                 LOWER(CONCAT(s.first_name, s.last_name)) LIKE '%{filter_str}%';
             
         """)
-        update_table(table=table, result=staff_list, header= header)
-        table.setColumnWidth(0, 64)
-        table.setColumnWidth(1, 256)
-        table.setColumnWidth(2, 128)
+        table.update_data(data=staff_list, header=header)
+        table.ui.table.setColumnWidth(0, 64)
+        table.ui.table.setColumnWidth(1, 256)
+        table.ui.table.setColumnWidth(2, 128)
         self.ui.stack_content_pages.setCurrentIndex(4)
         self.view_detail_staff()
     
@@ -164,32 +159,28 @@ class CustomerViewControler(Controller):
         super().__init__(root=root, popup=CustomerWindow())
     
     def setupSlot(self):
-        self.ui.btn_customer.toggled.connect(self.on_open_customer_view)
+        self.ui.btn_customer.toggled.connect(self.on_open_view)
         self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
-        self.popup.inserted_record.connect(self.on_open_customer_view)
-        self.ui.table_customer.itemSelectionChanged.connect(self.view_detail)
+        self.popup.inserted_record.connect(self.on_open_view)
+        self.ui.table_customer.ui.table.itemSelectionChanged.connect(self.view_detail)
         self.ui.btn_del_customer.clicked.connect(self.delete_current)
         self.ui.btn_update_customer.clicked.connect(self.update_current)
-        self.ui.txt_search_customer.textChanged.connect(self.on_open_customer_view)
+        self.ui.txt_search_customer.textChanged.connect(self.on_open_view)
 
     def get_current_id(self):
-        selected_rows = self.ui.table_customer.selectedItems()
+        selected_rows = self.ui.table_customer.get_current_item()
         if not selected_rows:
-            first_row_item = self.ui.table_customer.item(0, 0)
-            if first_row_item:
-                return first_row_item.text()
-            else:
-                return None
-        cur_id = selected_rows[0].text()
-        return cur_id
+            return None
+        id = selected_rows[0].text()
+        return id
 
-    def on_open_customer_view(self):
+    def on_open_view(self):
         table = self.ui.table_customer
         filter_str = self.ui.txt_search_customer.text()
         filter_str.replace(' ', '')
         header, result = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer as c WHERE LOWER(CONCAT(c.first_name, c.last_name)) LIKE \'%{filter_str}%\';')
-        update_table(table=table, result=result, header= header)
-        table.setColumnWidth(0, 64)
+        table.update_data(data = result, header=header)
+        table.ui.table.setColumnWidth(0, 64)
         self.ui.stack_content_pages.setCurrentIndex(3)
         self.view_detail()
 
@@ -239,7 +230,7 @@ class CustomerViewControler(Controller):
         if confirm_dialog == QMessageBox.StandardButton.No:
             return
         suc, msg = self.database.delete_query('customer', customer_id = current_id)
-        self.on_open_customer_view()
+        self.on_open_view()
         if suc:
             QMessageBox.information(self.root, "Information", msg)
         else:
@@ -255,56 +246,56 @@ class CustomerViewControler(Controller):
         info = dict(zip(title, info[0]))
         self.popup.show_popup(info = info)
 
-class ProductViewControler(Controller):
-    def __init__(self, root: SuperMarketManagerment) -> None:
-        super().__init__(root=root, popup=CustomerWindow())
+# class ProductViewControler(Controller):
+#     def __init__(self, root: SuperMarketManagerment) -> None:
+#         super().__init__(root=root, popup=CustomerWindow())
     
-    def setupslot(self):
-        self.ui.btn_customer.toggled.connect(self.on_open_customer_view)
-        self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
-        self.popup.inserted_record.connect(self.on_open_customer_view)
-        self.ui.table_customer.itemSelectionChanged.connect(self.view_detail)
-        self.ui.btn_del_customer.clicked.connect(self.delete_current)
-        self.ui.btn_update_customer.clicked.connect(self.update_current)
+#     def setupslot(self):
+#         self.ui.btn_customer.toggled.connect(self.on_open_view)
+#         self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
+#         self.popup.inserted_record.connect(self.on_open_view)
+#         self.ui.table_customer.itemSelectionChanged.connect(self.view_detail)
+#         self.ui.btn_del_customer.clicked.connect(self.delete_current)
+#         self.ui.btn_update_customer.clicked.connect(self.update_current)
 
-    def get_current_id(self):
-        pass
+#     def get_current_id(self):
+#         pass
 
-    def on_open_customer_view(self):
-        pass
+#     def on_open_view(self):
+#         pass
 
-    def view_detail(self):
-        pass
+#     def view_detail(self):
+#         pass
     
-    def delete_current(self):
-        pass
+#     def delete_current(self):
+#         pass
 
-    def update_current(self):
-        pass
+#     def update_current(self):
+#         pass
 
-class OrderViewControler(Controller):
-    def __init__(self, root: SuperMarketManagerment) -> None:
-        super().__init__(root=root, popup=CustomerWindow())
+# class OrderViewControler(Controller):
+#     def __init__(self, root: SuperMarketManagerment) -> None:
+#         super().__init__(root=root, popup=CustomerWindow())
     
-    def setupslot(self):
-        self.ui.btn_customer.toggled.connect(self.on_open_customer_view)
-        self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
-        self.popup.inserted_record.connect(self.on_open_customer_view)
-        self.ui.table_customer.itemSelectionChanged.connect(self.view_detail)
-        self.ui.btn_del_customer.clicked.connect(self.delete_current)
-        self.ui.btn_update_customer.clicked.connect(self.update_current)
+#     def setupslot(self):
+#         self.ui.btn_customer.toggled.connect(self.on_open_view)
+#         self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
+#         self.popup.inserted_record.connect(self.on_open_view)
+#         self.ui.table_customer.ui.table.itemSelectionChanged.connect(self.view_detail)
+#         self.ui.btn_del_customer.clicked.connect(self.delete_current)
+#         self.ui.btn_update_customer.clicked.connect(self.update_current)
 
-    def get_current_id(self):
-        pass
+#     def get_current_id(self):
+#         pass
 
-    def on_open_customer_view(self):
-        pass
+#     def on_open_view(self):
+#         pass
 
-    def view_detail(self):
-        pass
+#     def view_detail(self):
+#         pass
     
-    def delete_current(self):
-        pass
+#     def delete_current(self):
+#         pass
 
-    def update_current(self):
-        pass
+#     def update_current(self):
+#         pass
