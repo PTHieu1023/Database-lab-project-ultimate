@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
+    <width>1230</width>
     <height>720</height>
    </rect>
   </property>
@@ -746,215 +746,125 @@ QPushButton{
           </item>
           <item row="1" column="0">
            <widget class="QWidget" name="list_item_4" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_10">
+            <property name="styleSheet">
+             <string notr="true">QWidget{
+	background:rgb(188, 206, 253);
+	border-radius: 16px;
+}
+
+QScrollBar:horizontal {
+    border: 0px;
+    background:rgb(217, 217, 217);
+    height: 4px;
+    margin: 0px 0px 0 40px;
+}       
+QScrollBar::handle:horizontal {
+    background: rgb(112, 112, 112);
+    min-width: 32px;
+}        
+QScrollBar::add-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:vertical {
+    border: 0px;
+	width: 4px;
+    background:rgb(217, 217, 217);
+    margin: 26px 0px 0px 0px;
+}       
+QScrollBar::handle:vertical {
+    background: rgb(112, 112, 112);
+    min-height: 32px;
+}        
+QScrollBar::add-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+
+QHeaderView{
+	background-color: rgb(188, 206, 253);
+}
+
+QHeaderView::section {
+    background-color: rgb(188, 206, 253);
+	color: rgb(112, 112, 112);
+	border: 0px;
+	padding: 2px 4px 2px 4px;		
+	font-size: 12px;
+	font-family: Inter; 
+	font-weight: bold;
+}
+QTableCornerButton::section {
+    background-color: rgb(188, 206, 253);
+	border-top-left-radius: 16px;
+}
+
+QTableWidget { 
+	background-color: #ffffff;
+	border-width: 0px;
+	border-top-left-radius: 16px;
+}
+
+QLineEdit, QDateEdit, QComboBox, QTextEdit{
+	background-color: #ffffff;
+	padding-left: 16px;
+}
+
+QTableWidget::item {
+	padding-left: 16px;
+}
+
+QPushButton, QLabel {
+	color: rgb(112, 112, 112);
+}
+
+QPushButton:hover {
+	color: #fff;
+}
+</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>4</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>20</number>
+              <number>32</number>
              </property>
              <property name="bottomMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <item>
-              <widget class="QTableWidget" name="table_order">
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>11</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="mouseTracking">
-                <bool>false</bool>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOn</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SingleSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-               <property name="textElideMode">
-                <enum>Qt::ElideRight</enum>
-               </property>
-               <property name="horizontalScrollMode">
-                <enum>QAbstractItemView::ScrollPerItem</enum>
-               </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <property name="sortingEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="rowCount">
-                <number>100</number>
-               </property>
-               <property name="columnCount">
-                <number>6</number>
-               </property>
-               <attribute name="horizontalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderMinimumSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderDefaultSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderStretchLastSection">
-                <bool>false</bool>
-               </attribute>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <item row="0" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-              </widget>
+              <widget class="CustomTableView" name="table_order" native="true"/>
              </item>
             </layout>
            </widget>
@@ -1218,221 +1128,125 @@ QPushButton{
           </item>
           <item row="1" column="0">
            <widget class="QWidget" name="list_item_3" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="styleSheet">
+             <string notr="true">QWidget{
+	background:rgb(188, 206, 253);
+	border-radius: 16px;
+}
+
+QScrollBar:horizontal {
+    border: 0px;
+    background:rgb(217, 217, 217);
+    height: 4px;
+    margin: 0px 0px 0 40px;
+}       
+QScrollBar::handle:horizontal {
+    background: rgb(112, 112, 112);
+    min-width: 32px;
+}        
+QScrollBar::add-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:vertical {
+    border: 0px;
+	width: 4px;
+    background:rgb(217, 217, 217);
+    margin: 26px 0px 0px 0px;
+}       
+QScrollBar::handle:vertical {
+    background: rgb(112, 112, 112);
+    min-height: 32px;
+}        
+QScrollBar::add-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+
+QHeaderView{
+	background-color: rgb(188, 206, 253);
+}
+
+QHeaderView::section {
+    background-color: rgb(188, 206, 253);
+	color: rgb(112, 112, 112);
+	border: 0px;
+	padding: 2px 4px 2px 4px;		
+	font-size: 12px;
+	font-family: Inter; 
+	font-weight: bold;
+}
+QTableCornerButton::section {
+    background-color: rgb(188, 206, 253);
+	border-top-left-radius: 16px;
+}
+
+QTableWidget { 
+	background-color: #ffffff;
+	border-width: 0px;
+	border-top-left-radius: 16px;
+}
+
+QLineEdit, QDateEdit, QComboBox, QTextEdit{
+	background-color: #ffffff;
+	padding-left: 16px;
+}
+
+QTableWidget::item {
+	padding-left: 16px;
+}
+
+QPushButton, QLabel {
+	color: rgb(112, 112, 112);
+}
+
+QPushButton:hover {
+	color: #fff;
+}
+</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>4</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>20</number>
+              <number>32</number>
              </property>
              <property name="bottomMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <item>
-              <widget class="QTableWidget" name="table_product">
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>11</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="mouseTracking">
-                <bool>false</bool>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOn</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SingleSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-               <property name="textElideMode">
-                <enum>Qt::ElideRight</enum>
-               </property>
-               <property name="horizontalScrollMode">
-                <enum>QAbstractItemView::ScrollPerItem</enum>
-               </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <property name="sortingEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="rowCount">
-                <number>100</number>
-               </property>
-               <property name="columnCount">
-                <number>6</number>
-               </property>
-               <attribute name="horizontalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>64</number>
-               </attribute>
-               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderMinimumSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderDefaultSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderStretchLastSection">
-                <bool>false</bool>
-               </attribute>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <item row="0" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-              </widget>
+              <widget class="CustomTableView" name="table_product" native="true"/>
              </item>
             </layout>
            </widget>
@@ -1692,216 +1506,126 @@ QPushButton{
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QWidget" name="list_item_2" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_6">
+           <widget class="QWidget" name="table_customer" native="true">
+            <property name="styleSheet">
+             <string notr="true">QWidget{
+	background:rgb(188, 206, 253);
+	border-radius: 16px;
+}
+
+QScrollBar:horizontal {
+    border: 0px;
+    background:rgb(217, 217, 217);
+    height: 4px;
+    margin: 0px 0px 0 40px;
+}       
+QScrollBar::handle:horizontal {
+    background: rgb(112, 112, 112);
+    min-width: 32px;
+}        
+QScrollBar::add-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:vertical {
+    border: 0px;
+	width: 4px;
+    background:rgb(217, 217, 217);
+    margin: 26px 0px 0px 0px;
+}       
+QScrollBar::handle:vertical {
+    background: rgb(112, 112, 112);
+    min-height: 32px;
+}        
+QScrollBar::add-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+
+QHeaderView{
+	background-color: rgb(188, 206, 253);
+}
+
+QHeaderView::section {
+    background-color: rgb(188, 206, 253);
+	color: rgb(112, 112, 112);
+	border: 0px;
+	padding: 2px 4px 2px 4px;		
+	font-size: 12px;
+	font-family: Inter; 
+	font-weight: bold;
+}
+QTableCornerButton::section {
+    background-color: rgb(188, 206, 253);
+	border-top-left-radius: 16px;
+}
+
+QTableWidget { 
+	background-color: #ffffff;
+	border-width: 0px;
+	border-top-left-radius: 16px;
+}
+
+QLineEdit, QDateEdit, QComboBox, QTextEdit{
+	background-color: #ffffff;
+	padding-left: 16px;
+}
+
+QTableWidget::item {
+	padding-left: 16px;
+}
+
+QPushButton, QLabel {
+	color: rgb(112, 112, 112);
+}
+
+QPushButton:hover {
+	color: #fff;
+}
+</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>4</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>20</number>
+              <number>32</number>
              </property>
              <property name="bottomMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <item>
-              <widget class="QTableWidget" name="table_customer">
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>11</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="mouseTracking">
-                <bool>false</bool>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOn</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionMode">
-                <enum>QAbstractItemView::SingleSelection</enum>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-               <property name="textElideMode">
-                <enum>Qt::ElideRight</enum>
-               </property>
-               <property name="horizontalScrollMode">
-                <enum>QAbstractItemView::ScrollPerItem</enum>
-               </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <property name="sortingEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="rowCount">
-                <number>100</number>
-               </property>
-               <property name="columnCount">
-                <number>6</number>
-               </property>
-               <attribute name="horizontalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderMinimumSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderDefaultSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderStretchLastSection">
-                <bool>false</bool>
-               </attribute>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <item row="0" column="0">
-                <property name="text">
-                 <string>eqwewqewqe</string>
-                </property>
-               </item>
-              </widget>
+              <widget class="CustomTableView" name="tabel_customer" native="true"/>
              </item>
             </layout>
            </widget>
@@ -2162,349 +1886,125 @@ QPushButton{
           </item>
           <item row="1" column="0">
            <widget class="QWidget" name="list_item_5" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_14" stretch="16,1">
+            <property name="styleSheet">
+             <string notr="true">QWidget{
+	background:rgb(188, 206, 253);
+	border-radius: 16px;
+}
+
+QScrollBar:horizontal {
+    border: 0px;
+    background:rgb(217, 217, 217);
+    height: 4px;
+    margin: 0px 0px 0 40px;
+}       
+QScrollBar::handle:horizontal {
+    background: rgb(112, 112, 112);
+    min-width: 32px;
+}        
+QScrollBar::add-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    width: 64px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar:vertical {
+    border: 0px;
+	width: 4px;
+    background:rgb(217, 217, 217);
+    margin: 26px 0px 0px 0px;
+}       
+QScrollBar::handle:vertical {
+    background: rgb(112, 112, 112);
+    min-height: 32px;
+}        
+QScrollBar::add-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+    border: 0px;
+    background: rgb(188, 206, 253);
+    height: 64px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+
+QHeaderView{
+	background-color: rgb(188, 206, 253);
+}
+
+QHeaderView::section {
+    background-color: rgb(188, 206, 253);
+	color: rgb(112, 112, 112);
+	border: 0px;
+	padding: 2px 4px 2px 4px;		
+	font-size: 12px;
+	font-family: Inter; 
+	font-weight: bold;
+}
+QTableCornerButton::section {
+    background-color: rgb(188, 206, 253);
+	border-top-left-radius: 16px;
+}
+
+QTableWidget { 
+	background-color: #ffffff;
+	border-width: 0px;
+	border-top-left-radius: 16px;
+}
+
+QLineEdit, QDateEdit, QComboBox, QTextEdit{
+	background-color: #ffffff;
+	padding-left: 16px;
+}
+
+QTableWidget::item {
+	padding-left: 16px;
+}
+
+QPushButton, QLabel {
+	color: rgb(112, 112, 112);
+}
+
+QPushButton:hover {
+	color: #fff;
+}
+</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>4</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>20</number>
+              <number>32</number>
              </property>
              <property name="bottomMargin">
-              <number>4</number>
+              <number>0</number>
              </property>
              <item>
-              <widget class="QTableWidget" name="table_staff">
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>11</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="mouseTracking">
-                <bool>false</bool>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>0</number>
-               </property>
-               <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOn</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
-               </property>
-               <property name="tabKeyNavigation">
-                <bool>true</bool>
-               </property>
-               <property name="showDropIndicator" stdset="0">
-                <bool>true</bool>
-               </property>
-               <property name="dragDropOverwriteMode">
-                <bool>true</bool>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-               <property name="textElideMode">
-                <enum>Qt::ElideMiddle</enum>
-               </property>
-               <property name="horizontalScrollMode">
-                <enum>QAbstractItemView::ScrollPerItem</enum>
-               </property>
-               <property name="showGrid">
-                <bool>false</bool>
-               </property>
-               <property name="gridStyle">
-                <enum>Qt::SolidLine</enum>
-               </property>
-               <property name="sortingEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="cornerButtonEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="rowCount">
-                <number>100</number>
-               </property>
-               <property name="columnCount">
-                <number>6</number>
-               </property>
-               <attribute name="horizontalHeaderVisible">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="horizontalHeaderStretchLastSection">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderVisible">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderCascadingSectionResizes">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderMinimumSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderDefaultSectionSize">
-                <number>32</number>
-               </attribute>
-               <attribute name="verticalHeaderHighlightSections">
-                <bool>true</bool>
-               </attribute>
-               <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
-               </attribute>
-               <attribute name="verticalHeaderStretchLastSection">
-                <bool>false</bool>
-               </attribute>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <column/>
-               <item row="0" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="background">
-                 <brush brushstyle="NoBrush">
-                  <color alpha="255">
-                   <red>0</red>
-                   <green>0</green>
-                   <blue>0</blue>
-                  </color>
-                 </brush>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="widget" native="true">
-               <property name="styleSheet">
-                <string notr="true">QWidget{
-	background-color: rgb(188, 206, 253);
-}
-
-QPushButton {
-	color: rgb(112, 112, 112);
-	background-color: rgb(188, 206, 253);
-}
-
-QPushButton:hover {
-        color: #ffffff;
-  }</string>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3,1">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>48</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>32</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QPushButton" name="btn_pre_staff">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Inter</family>
-                    <pointsize>12</pointsize>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Previous</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="count_staff">
-                  <property name="font">
-                   <font>
-                    <family>Inter</family>
-                    <pointsize>12</pointsize>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(112, 112, 112);</string>
-                  </property>
-                  <property name="text">
-                   <string>0/0</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btn_next_staff">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Inter</family>
-                    <pointsize>12</pointsize>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>Next</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
+              <widget class="CustomTableView" name="table_staff" native="true"/>
              </item>
             </layout>
            </widget>
@@ -2647,6 +2147,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomTableView</class>
+   <extends>QWidget</extends>
+   <header>CustomTableView</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

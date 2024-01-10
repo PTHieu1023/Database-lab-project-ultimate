@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_main_screen(object):
     def setupUi(self, main_screen):
         main_screen.setObjectName("main_screen")
-        main_screen.resize(1280, 720)
+        main_screen.resize(1230, 720)
         font = QtGui.QFont()
         font.setFamily("Inter ExtraBold")
         font.setBold(True)
@@ -422,44 +422,113 @@ class Ui_main_screen(object):
         self.horizontalLayout_8.setStretch(2, 2)
         self.gridLayout_6.addWidget(self.head_bar_4, 0, 0, 1, 2)
         self.list_item_4 = QtWidgets.QWidget(parent=self.order_view)
+        self.list_item_4.setStyleSheet("QWidget{\n"
+"    background:rgb(188, 206, 253);\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    border: 0px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    height: 4px;\n"
+"    margin: 0px 0px 0 40px;\n"
+"}       \n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-width: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    border: 0px;\n"
+"    width: 4px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    margin: 26px 0px 0px 0px;\n"
+"}       \n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-height: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"\n"
+"QHeaderView{\n"
+"    background-color: rgb(188, 206, 253);\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    color: rgb(112, 112, 112);\n"
+"    border: 0px;\n"
+"    padding: 2px 4px 2px 4px;        \n"
+"    font-size: 12px;\n"
+"    font-family: Inter; \n"
+"    font-weight: bold;\n"
+"}\n"
+"QTableCornerButton::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget { \n"
+"    background-color: #ffffff;\n"
+"    border-width: 0px;\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QLineEdit, QDateEdit, QComboBox, QTextEdit{\n"
+"    background-color: #ffffff;\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget::item {\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QPushButton, QLabel {\n"
+"    color: rgb(112, 112, 112);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    color: #fff;\n"
+"}\n"
+"")
         self.list_item_4.setObjectName("list_item_4")
-        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.list_item_4)
-        self.verticalLayout_10.setContentsMargins(4, 0, 20, 20)
-        self.verticalLayout_10.setSpacing(0)
-        self.verticalLayout_10.setObjectName("verticalLayout_10")
-        self.table_order = QtWidgets.QTableWidget(parent=self.list_item_4)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(11)
-        font.setBold(False)
-        self.table_order.setFont(font)
-        self.table_order.setMouseTracking(False)
-        self.table_order.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.table_order.setAutoFillBackground(False)
-        self.table_order.setLineWidth(0)
-        self.table_order.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.table_order.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
-        self.table_order.setAlternatingRowColors(True)
-        self.table_order.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.SingleSelection)
-        self.table_order.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
-        self.table_order.setTextElideMode(QtCore.Qt.TextElideMode.ElideRight)
-        self.table_order.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollMode.ScrollPerItem)
-        self.table_order.setShowGrid(False)
-        self.table_order.setCornerButtonEnabled(False)
-        self.table_order.setRowCount(100)
-        self.table_order.setColumnCount(6)
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.list_item_4)
+        self.horizontalLayout_9.setContentsMargins(0, 0, 32, 0)
+        self.horizontalLayout_9.setSpacing(0)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.table_order = CustomTableView(parent=self.list_item_4)
         self.table_order.setObjectName("table_order")
-        item = QtWidgets.QTableWidgetItem()
-        self.table_order.setItem(0, 0, item)
-        self.table_order.horizontalHeader().setCascadingSectionResizes(True)
-        self.table_order.horizontalHeader().setSortIndicatorShown(False)
-        self.table_order.horizontalHeader().setStretchLastSection(True)
-        self.table_order.verticalHeader().setCascadingSectionResizes(True)
-        self.table_order.verticalHeader().setDefaultSectionSize(32)
-        self.table_order.verticalHeader().setMinimumSectionSize(32)
-        self.table_order.verticalHeader().setSortIndicatorShown(False)
-        self.table_order.verticalHeader().setStretchLastSection(False)
-        self.verticalLayout_10.addWidget(self.table_order)
+        self.horizontalLayout_9.addWidget(self.table_order)
         self.gridLayout_6.addWidget(self.list_item_4, 1, 0, 1, 1)
         self.order_detail_view = QtWidgets.QWidget(parent=self.order_view)
         self.order_detail_view.setStyleSheet("QTextEdit{\n"
@@ -603,46 +672,113 @@ class Ui_main_screen(object):
         self.horizontalLayout_5.setStretch(2, 2)
         self.gridLayout_5.addWidget(self.head_bar_3, 0, 0, 1, 2)
         self.list_item_3 = QtWidgets.QWidget(parent=self.product_view)
+        self.list_item_3.setStyleSheet("QWidget{\n"
+"    background:rgb(188, 206, 253);\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    border: 0px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    height: 4px;\n"
+"    margin: 0px 0px 0 40px;\n"
+"}       \n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-width: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    border: 0px;\n"
+"    width: 4px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    margin: 26px 0px 0px 0px;\n"
+"}       \n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-height: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"\n"
+"QHeaderView{\n"
+"    background-color: rgb(188, 206, 253);\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    color: rgb(112, 112, 112);\n"
+"    border: 0px;\n"
+"    padding: 2px 4px 2px 4px;        \n"
+"    font-size: 12px;\n"
+"    font-family: Inter; \n"
+"    font-weight: bold;\n"
+"}\n"
+"QTableCornerButton::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget { \n"
+"    background-color: #ffffff;\n"
+"    border-width: 0px;\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QLineEdit, QDateEdit, QComboBox, QTextEdit{\n"
+"    background-color: #ffffff;\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget::item {\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QPushButton, QLabel {\n"
+"    color: rgb(112, 112, 112);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    color: #fff;\n"
+"}\n"
+"")
         self.list_item_3.setObjectName("list_item_3")
-        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.list_item_3)
-        self.verticalLayout_7.setContentsMargins(4, 0, 20, 20)
-        self.verticalLayout_7.setSpacing(0)
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.table_product = QtWidgets.QTableWidget(parent=self.list_item_3)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(11)
-        font.setBold(False)
-        self.table_product.setFont(font)
-        self.table_product.setMouseTracking(False)
-        self.table_product.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.table_product.setAutoFillBackground(False)
-        self.table_product.setLineWidth(0)
-        self.table_product.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.table_product.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
-        self.table_product.setAlternatingRowColors(True)
-        self.table_product.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.SingleSelection)
-        self.table_product.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
-        self.table_product.setTextElideMode(QtCore.Qt.TextElideMode.ElideRight)
-        self.table_product.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollMode.ScrollPerItem)
-        self.table_product.setShowGrid(False)
-        self.table_product.setCornerButtonEnabled(False)
-        self.table_product.setRowCount(100)
-        self.table_product.setColumnCount(6)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.list_item_3)
+        self.verticalLayout_4.setContentsMargins(0, 0, 32, 0)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.table_product = CustomTableView(parent=self.list_item_3)
         self.table_product.setObjectName("table_product")
-        item = QtWidgets.QTableWidgetItem()
-        self.table_product.setItem(0, 0, item)
-        self.table_product.horizontalHeader().setCascadingSectionResizes(True)
-        self.table_product.horizontalHeader().setMinimumSectionSize(64)
-        self.table_product.horizontalHeader().setSortIndicatorShown(False)
-        self.table_product.horizontalHeader().setStretchLastSection(True)
-        self.table_product.verticalHeader().setVisible(True)
-        self.table_product.verticalHeader().setCascadingSectionResizes(True)
-        self.table_product.verticalHeader().setDefaultSectionSize(32)
-        self.table_product.verticalHeader().setMinimumSectionSize(32)
-        self.table_product.verticalHeader().setSortIndicatorShown(False)
-        self.table_product.verticalHeader().setStretchLastSection(False)
-        self.verticalLayout_7.addWidget(self.table_product)
+        self.verticalLayout_4.addWidget(self.table_product)
         self.gridLayout_5.addWidget(self.list_item_3, 1, 0, 1, 1)
         self.product_detail_view = QtWidgets.QWidget(parent=self.product_view)
         self.product_detail_view.setStyleSheet("QTextEdit{\n"
@@ -784,46 +920,115 @@ class Ui_main_screen(object):
         self.horizontalLayout_4.setStretch(1, 7)
         self.horizontalLayout_4.setStretch(2, 2)
         self.gridLayout_4.addWidget(self.head_bar_2, 0, 0, 1, 2)
-        self.list_item_2 = QtWidgets.QWidget(parent=self.customer_view)
-        self.list_item_2.setObjectName("list_item_2")
-        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.list_item_2)
-        self.verticalLayout_6.setContentsMargins(4, 0, 20, 20)
-        self.verticalLayout_6.setSpacing(0)
-        self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.table_customer = QtWidgets.QTableWidget(parent=self.list_item_2)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(11)
-        font.setBold(False)
-        self.table_customer.setFont(font)
-        self.table_customer.setMouseTracking(False)
-        self.table_customer.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.table_customer.setAutoFillBackground(False)
-        self.table_customer.setLineWidth(0)
-        self.table_customer.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.table_customer.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
-        self.table_customer.setAlternatingRowColors(True)
-        self.table_customer.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.SingleSelection)
-        self.table_customer.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
-        self.table_customer.setTextElideMode(QtCore.Qt.TextElideMode.ElideRight)
-        self.table_customer.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollMode.ScrollPerItem)
-        self.table_customer.setShowGrid(False)
-        self.table_customer.setCornerButtonEnabled(False)
-        self.table_customer.setRowCount(100)
-        self.table_customer.setColumnCount(6)
+        self.table_customer = QtWidgets.QWidget(parent=self.customer_view)
+        self.table_customer.setStyleSheet("QWidget{\n"
+"    background:rgb(188, 206, 253);\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    border: 0px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    height: 4px;\n"
+"    margin: 0px 0px 0 40px;\n"
+"}       \n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-width: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    border: 0px;\n"
+"    width: 4px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    margin: 26px 0px 0px 0px;\n"
+"}       \n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-height: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"\n"
+"QHeaderView{\n"
+"    background-color: rgb(188, 206, 253);\n"
+"}\n"
+"\n"
+"QHeaderView::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    color: rgb(112, 112, 112);\n"
+"    border: 0px;\n"
+"    padding: 2px 4px 2px 4px;        \n"
+"    font-size: 12px;\n"
+"    font-family: Inter; \n"
+"    font-weight: bold;\n"
+"}\n"
+"QTableCornerButton::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget { \n"
+"    background-color: #ffffff;\n"
+"    border-width: 0px;\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QLineEdit, QDateEdit, QComboBox, QTextEdit{\n"
+"    background-color: #ffffff;\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget::item {\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QPushButton, QLabel {\n"
+"    color: rgb(112, 112, 112);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    color: #fff;\n"
+"}\n"
+"")
         self.table_customer.setObjectName("table_customer")
-        item = QtWidgets.QTableWidgetItem()
-        self.table_customer.setItem(0, 0, item)
-        self.table_customer.horizontalHeader().setCascadingSectionResizes(True)
-        self.table_customer.horizontalHeader().setSortIndicatorShown(False)
-        self.table_customer.horizontalHeader().setStretchLastSection(True)
-        self.table_customer.verticalHeader().setCascadingSectionResizes(True)
-        self.table_customer.verticalHeader().setDefaultSectionSize(32)
-        self.table_customer.verticalHeader().setMinimumSectionSize(32)
-        self.table_customer.verticalHeader().setSortIndicatorShown(False)
-        self.table_customer.verticalHeader().setStretchLastSection(False)
-        self.verticalLayout_6.addWidget(self.table_customer)
-        self.gridLayout_4.addWidget(self.list_item_2, 1, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.table_customer)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 32, 0)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.tabel_customer = CustomTableView(parent=self.table_customer)
+        self.tabel_customer.setObjectName("tabel_customer")
+        self.horizontalLayout_2.addWidget(self.tabel_customer)
+        self.gridLayout_4.addWidget(self.table_customer, 1, 0, 1, 1)
         self.customer_detail_view = QtWidgets.QWidget(parent=self.customer_view)
         self.customer_detail_view.setStyleSheet("QTextEdit{\n"
 "    border: 1px solid rgb(112, 112, 112);\n"
@@ -965,117 +1170,113 @@ class Ui_main_screen(object):
         self.horizontalLayout_12.setStretch(2, 2)
         self.gridLayout_3.addWidget(self.head_bar_5, 0, 0, 1, 2)
         self.list_item_5 = QtWidgets.QWidget(parent=self.staff_view)
-        self.list_item_5.setObjectName("list_item_5")
-        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.list_item_5)
-        self.verticalLayout_14.setContentsMargins(4, 0, 20, 4)
-        self.verticalLayout_14.setSpacing(0)
-        self.verticalLayout_14.setObjectName("verticalLayout_14")
-        self.table_staff = QtWidgets.QTableWidget(parent=self.list_item_5)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(11)
-        font.setBold(False)
-        self.table_staff.setFont(font)
-        self.table_staff.setMouseTracking(False)
-        self.table_staff.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.table_staff.setAutoFillBackground(False)
-        self.table_staff.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
-        self.table_staff.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
-        self.table_staff.setLineWidth(0)
-        self.table_staff.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.table_staff.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
-        self.table_staff.setTabKeyNavigation(True)
-        self.table_staff.setProperty("showDropIndicator", True)
-        self.table_staff.setDragDropOverwriteMode(True)
-        self.table_staff.setAlternatingRowColors(True)
-        self.table_staff.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
-        self.table_staff.setTextElideMode(QtCore.Qt.TextElideMode.ElideMiddle)
-        self.table_staff.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollMode.ScrollPerItem)
-        self.table_staff.setShowGrid(False)
-        self.table_staff.setGridStyle(QtCore.Qt.PenStyle.SolidLine)
-        self.table_staff.setWordWrap(True)
-        self.table_staff.setCornerButtonEnabled(False)
-        self.table_staff.setRowCount(100)
-        self.table_staff.setColumnCount(6)
-        self.table_staff.setObjectName("table_staff")
-        item = QtWidgets.QTableWidgetItem()
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.BrushStyle.NoBrush)
-        item.setBackground(brush)
-        self.table_staff.setItem(0, 0, item)
-        self.table_staff.horizontalHeader().setVisible(True)
-        self.table_staff.horizontalHeader().setCascadingSectionResizes(True)
-        self.table_staff.horizontalHeader().setSortIndicatorShown(False)
-        self.table_staff.horizontalHeader().setStretchLastSection(True)
-        self.table_staff.verticalHeader().setVisible(True)
-        self.table_staff.verticalHeader().setCascadingSectionResizes(True)
-        self.table_staff.verticalHeader().setDefaultSectionSize(32)
-        self.table_staff.verticalHeader().setHighlightSections(True)
-        self.table_staff.verticalHeader().setMinimumSectionSize(32)
-        self.table_staff.verticalHeader().setSortIndicatorShown(False)
-        self.table_staff.verticalHeader().setStretchLastSection(False)
-        self.verticalLayout_14.addWidget(self.table_staff)
-        self.widget = QtWidgets.QWidget(parent=self.list_item_5)
-        self.widget.setStyleSheet("QWidget{\n"
+        self.list_item_5.setStyleSheet("QWidget{\n"
+"    background:rgb(188, 206, 253);\n"
+"    border-radius: 16px;\n"
+"}\n"
+"\n"
+"QScrollBar:horizontal {\n"
+"    border: 0px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    height: 4px;\n"
+"    margin: 0px 0px 0 40px;\n"
+"}       \n"
+"QScrollBar::handle:horizontal {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-width: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: left;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    width: 64px;\n"
+"    subcontrol-position: right;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar:vertical {\n"
+"    border: 0px;\n"
+"    width: 4px;\n"
+"    background:rgb(217, 217, 217);\n"
+"    margin: 26px 0px 0px 0px;\n"
+"}       \n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgb(112, 112, 112);\n"
+"    min-height: 32px;\n"
+"}        \n"
+"QScrollBar::add-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: top;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"    border: 0px;\n"
+"    background: rgb(188, 206, 253);\n"
+"    height: 64px;\n"
+"    subcontrol-position: bottom;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"\n"
+"QHeaderView{\n"
 "    background-color: rgb(188, 206, 253);\n"
 "}\n"
 "\n"
-"QPushButton {\n"
-"    color: rgb(112, 112, 112);\n"
+"QHeaderView::section {\n"
 "    background-color: rgb(188, 206, 253);\n"
+"    color: rgb(112, 112, 112);\n"
+"    border: 0px;\n"
+"    padding: 2px 4px 2px 4px;        \n"
+"    font-size: 12px;\n"
+"    font-family: Inter; \n"
+"    font-weight: bold;\n"
+"}\n"
+"QTableCornerButton::section {\n"
+"    background-color: rgb(188, 206, 253);\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget { \n"
+"    background-color: #ffffff;\n"
+"    border-width: 0px;\n"
+"    border-top-left-radius: 16px;\n"
+"}\n"
+"\n"
+"QLineEdit, QDateEdit, QComboBox, QTextEdit{\n"
+"    background-color: #ffffff;\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QTableWidget::item {\n"
+"    padding-left: 16px;\n"
+"}\n"
+"\n"
+"QPushButton, QLabel {\n"
+"    color: rgb(112, 112, 112);\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"        color: #ffffff;\n"
-"  }")
-        self.widget.setObjectName("widget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
-        self.horizontalLayout.setContentsMargins(48, 0, 32, 0)
+"    color: #fff;\n"
+"}\n"
+"")
+        self.list_item_5.setObjectName("list_item_5")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.list_item_5)
+        self.horizontalLayout.setContentsMargins(0, 0, 32, 0)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.btn_pre_staff = QtWidgets.QPushButton(parent=self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_pre_staff.sizePolicy().hasHeightForWidth())
-        self.btn_pre_staff.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(12)
-        font.setBold(True)
-        self.btn_pre_staff.setFont(font)
-        self.btn_pre_staff.setObjectName("btn_pre_staff")
-        self.horizontalLayout.addWidget(self.btn_pre_staff)
-        self.count_staff = QtWidgets.QLabel(parent=self.widget)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(12)
-        font.setBold(True)
-        self.count_staff.setFont(font)
-        self.count_staff.setStyleSheet("color: rgb(112, 112, 112);")
-        self.count_staff.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.count_staff.setObjectName("count_staff")
-        self.horizontalLayout.addWidget(self.count_staff)
-        self.btn_next_staff = QtWidgets.QPushButton(parent=self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_next_staff.sizePolicy().hasHeightForWidth())
-        self.btn_next_staff.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Inter")
-        font.setPointSize(12)
-        font.setBold(True)
-        self.btn_next_staff.setFont(font)
-        self.btn_next_staff.setStyleSheet("")
-        self.btn_next_staff.setObjectName("btn_next_staff")
-        self.horizontalLayout.addWidget(self.btn_next_staff)
-        self.horizontalLayout.setStretch(0, 1)
-        self.horizontalLayout.setStretch(1, 3)
-        self.horizontalLayout.setStretch(2, 1)
-        self.verticalLayout_14.addWidget(self.widget)
-        self.verticalLayout_14.setStretch(0, 16)
-        self.verticalLayout_14.setStretch(1, 1)
+        self.table_staff = CustomTableView(parent=self.list_item_5)
+        self.table_staff.setObjectName("table_staff")
+        self.horizontalLayout.addWidget(self.table_staff)
         self.gridLayout_3.addWidget(self.list_item_5, 1, 0, 1, 1)
         self.staff_detail_view = QtWidgets.QWidget(parent=self.staff_view)
         self.staff_detail_view.setStyleSheet("QTextEdit{\n"
@@ -1177,10 +1378,6 @@ class Ui_main_screen(object):
         self.table_result.setSortingEnabled(__sortingEnabled)
         self.label_5.setText(_translate("main_screen", "Search:"))
         self.btn_add_order.setText(_translate("main_screen", "New Order"))
-        self.table_order.setSortingEnabled(False)
-        __sortingEnabled = self.table_order.isSortingEnabled()
-        self.table_order.setSortingEnabled(False)
-        self.table_order.setSortingEnabled(__sortingEnabled)
         self.info_order.setHtml(_translate("main_screen", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1193,10 +1390,6 @@ class Ui_main_screen(object):
         self.btn_update_order.setText(_translate("main_screen", "Update"))
         self.label_4.setText(_translate("main_screen", "Search:"))
         self.btn_add_product.setText(_translate("main_screen", "New Product"))
-        self.table_product.setSortingEnabled(False)
-        __sortingEnabled = self.table_product.isSortingEnabled()
-        self.table_product.setSortingEnabled(False)
-        self.table_product.setSortingEnabled(__sortingEnabled)
         self.info_product.setHtml(_translate("main_screen", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1209,12 +1402,6 @@ class Ui_main_screen(object):
         self.btn_update_product.setText(_translate("main_screen", "Update"))
         self.label_3.setText(_translate("main_screen", "Search:"))
         self.btn_add_customer.setText(_translate("main_screen", "New Customer"))
-        self.table_customer.setSortingEnabled(False)
-        __sortingEnabled = self.table_customer.isSortingEnabled()
-        self.table_customer.setSortingEnabled(False)
-        item = self.table_customer.item(0, 0)
-        item.setText(_translate("main_screen", "eqwewqewqe"))
-        self.table_customer.setSortingEnabled(__sortingEnabled)
         self.info_customer.setHtml(_translate("main_screen", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1227,13 +1414,6 @@ class Ui_main_screen(object):
         self.btn_update_customer.setText(_translate("main_screen", "Update"))
         self.label_7.setText(_translate("main_screen", "Search:"))
         self.btn_add_staff.setText(_translate("main_screen", "New Staff"))
-        self.table_staff.setSortingEnabled(False)
-        __sortingEnabled = self.table_staff.isSortingEnabled()
-        self.table_staff.setSortingEnabled(False)
-        self.table_staff.setSortingEnabled(__sortingEnabled)
-        self.btn_pre_staff.setText(_translate("main_screen", "Previous"))
-        self.count_staff.setText(_translate("main_screen", "0/0"))
-        self.btn_next_staff.setText(_translate("main_screen", "Next"))
         self.info_staff.setHtml(_translate("main_screen", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1244,6 +1424,7 @@ class Ui_main_screen(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.btn_del_staff.setText(_translate("main_screen", "Delete"))
         self.btn_update_staff.setText(_translate("main_screen", "Update"))
+from CustomTableView import CustomTableView
 
 
 if __name__ == "__main__":
