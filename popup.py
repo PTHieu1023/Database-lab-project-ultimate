@@ -77,7 +77,7 @@ class AddRecordDialog(QDialog):
         self.close()
 
     def query_data(self):
-        pass
+        return False, 'No found object'
 
 class StaffWindow(AddRecordDialog):
     def __init__(self, parent=None):
@@ -213,7 +213,7 @@ class ProductWindow(AddRecordDialog):
         return super().set_database(database)
     
     def show_popup(self, info = None):
-        self.cur_id = str(info['product_id'])
+        self.cur_id = info['product_id']
         self.ui.txt_title.setText(str(info['title']))
         self.ui.txt_suplier.setText(str(info['supplier']))
         self.ui.created_time.setDateTime(QDateTime.currentDateTime())
@@ -222,12 +222,13 @@ class ProductWindow(AddRecordDialog):
     def import_form(self):
         data = {}
         data['product_id'] = self.cur_id
-        data['price_all'] = self.ui.txt_price
-        data['quantity'] = self.ui.txt_quantity
-        data['supplied_time'] = self.ui.created_time.time()
-        data['date'] = self.ui.created_time.date()
+        data['price_all'] = self.ui.txt_price.text()
+        data['quantity'] = self.ui.txt_quantity.text()
+        data['supplied_time'] = self.ui.created_time.time().toString("hh:mm:ss")
+        data['date'] = self.ui.created_time.date().toString("yyyy-MM-dd")
+        return data
 
-    def querry_data(self):
+    def query_data(self):
         suc = msg = None
         confirm_dialog = QMessageBox.question(None, 'Confirm', 'Do you want to continue ?',  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
         if confirm_dialog == QMessageBox.StandardButton.No:

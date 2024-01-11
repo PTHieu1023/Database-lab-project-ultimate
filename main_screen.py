@@ -255,7 +255,7 @@ class ProductViewControler(Controller):
         table.ui.table.setColumnWidth(2, 96)
         table.ui.table.setColumnWidth(3, 96)
         self.ui.stack_content_pages.setCurrentIndex(2)
-        # self.view_detail()
+        self.view_detail()
 
     def view_detail(self):
         id = self.get_current_id()

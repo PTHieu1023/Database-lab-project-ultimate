@@ -101,7 +101,7 @@ from
     left join supplier as s on p.supplier = s.supplier_id
     left join bill_detail as bd on p.product_id = bd.product_id
 where
-    p.product_id = 2
+    p.product_id = {id}
 group by
     p.product_id,
     s.name
