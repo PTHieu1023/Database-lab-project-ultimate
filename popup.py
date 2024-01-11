@@ -78,8 +78,6 @@ class AddRecordDialog(QDialog):
     def query_data(self):
         pass
 
-
-
 class StaffWindow(AddRecordDialog):
     def __init__(self, parent=None):
         super().__init__(parent, Ui_Dialog())

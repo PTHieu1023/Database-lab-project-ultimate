@@ -70,16 +70,18 @@ class GeneralViewController(Controller):
 class StaffViewController(Controller):
     def __init__(self, root:SuperMarketManagerment) -> None:
         super().__init__(root, StaffWindow())
+        self.header = []
+        self.staff_list = []
    
     def setupSlot(self):
-        self.ui.btn_staff.toggled.connect(self.on_open_staff_view)
+        self.ui.btn_staff.toggled.connect(self.on_open_view)
         self.ui.btn_add_staff.clicked.connect(lambda:self.popup.show_popup())
-        self.popup.inserted_record.connect(self.on_open_staff_view)
+        self.popup.inserted_record.connect(self.on_open_view)
         # self.ui.table_staff.itemSelectionChanged.connect(self.view_detail_staff)
         self.ui.table_staff.ui.table.itemSelectionChanged.connect(self.view_detail_staff)
         self.ui.btn_del_staff.clicked.connect(self.delete_current_staff)
         self.ui.btn_update_staff.clicked.connect(self.update_current_staff)
-        self.ui.txt_search_staff.textChanged.connect(self.on_open_staff_view)
+        self.ui.txt_search_staff.textChanged.connect(self.set_list)
     
     def get_current_staff_id(self):
         selected_rows = self.ui.table_staff.get_current_item()
@@ -88,23 +90,21 @@ class StaffViewController(Controller):
         staff_id = selected_rows[0].text()
         return staff_id
 
-    def on_open_staff_view(self):
+    def on_open_view(self):
         table = self.ui.table_staff
         filter_str = self.ui.txt_search_staff.text()
         filter_str.replace(' ', '')
-        header, staff_list = self.database.select_query(f"""
+        self.header, self.staff_list = self.database.select_query(f"""
             SELECT 
                 s.staff_id as "ID", CONCAT_WS(' ', s.first_name, s.last_name) as "NAME", 
                 r.role as "ROLE", s.salary AS "SALARY" 
             FROM 
                 staff as s 
             LEFT JOIN 
-                staff_role as r ON s.role = r.staff_role_id
-            WHERE
-                LOWER(CONCAT(s.first_name, s.last_name)) LIKE '%{filter_str}%';
-            
+                staff_role as r ON s.role = r.staff_role_id;
         """)
-        table.update_data(data=staff_list, header=header)
+        # table.update_data(data=staff_list, header=header)
+        self.set_list()
         table.ui.table.setColumnWidth(0, 64)
         table.ui.table.setColumnWidth(1, 256)
         table.ui.table.setColumnWidth(2, 128)
@@ -154,9 +154,19 @@ class StaffViewController(Controller):
         else:
             QMessageBox.information(self.root, "Error", msg)
 
+    def set_list(self):
+        filter_str = self.ui.txt_search_staff.text()
+        filter_list = []
+        if filter_str is None or filter_str == '':
+            filter_list = self.staff_list
+        else:
+            filter_list = list(filter(lambda x: filter_str in x[1], self.staff_list))
+        self.ui.table_staff.update_data(data=filter_list, header= self.header)
+
 class CustomerViewControler(Controller):
     def __init__(self, root: SuperMarketManagerment) -> None:
         super().__init__(root=root, popup=CustomerWindow())
+        self.full_data = []
     
     def setupSlot(self):
         self.ui.btn_customer.toggled.connect(self.on_open_view)
@@ -165,7 +175,7 @@ class CustomerViewControler(Controller):
         self.ui.table_customer.ui.table.itemSelectionChanged.connect(self.view_detail)
         self.ui.btn_del_customer.clicked.connect(self.delete_current)
         self.ui.btn_update_customer.clicked.connect(self.update_current)
-        self.ui.txt_search_customer.textChanged.connect(self.on_open_view)
+        self.ui.txt_search_customer.textChanged.connect(self.set_list)
 
     def get_current_id(self):
         selected_rows = self.ui.table_customer.get_current_item()
@@ -178,8 +188,8 @@ class CustomerViewControler(Controller):
         table = self.ui.table_customer
         filter_str = self.ui.txt_search_customer.text()
         filter_str.replace(' ', '')
-        header, result = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer as c WHERE LOWER(CONCAT(c.first_name, c.last_name)) LIKE \'%{filter_str}%\';')
-        table.update_data(data = result, header=header)
+        self.header, self.full_data = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer;')
+        self.set_list()
         table.ui.table.setColumnWidth(0, 64)
         self.ui.stack_content_pages.setCurrentIndex(3)
         self.view_detail()
@@ -236,7 +246,6 @@ class CustomerViewControler(Controller):
         else:
             QMessageBox.information(self.root, "Error", msg)
 
-
     def update_current(self):
         current_id = self.get_current_id()
         if current_id is None:
@@ -246,32 +255,46 @@ class CustomerViewControler(Controller):
         info = dict(zip(title, info[0]))
         self.popup.show_popup(info = info)
 
-# class ProductViewControler(Controller):
-#     def __init__(self, root: SuperMarketManagerment) -> None:
-#         super().__init__(root=root, popup=CustomerWindow())
+    def set_list(self):
+        filter_str = self.ui.txt_search_customer.text()
+        if filter_str is None or filter_str == '':
+            self.ui.table_customer.update_data(data=self.full_data, header=self.header)
+        filtered_list = list(filter(lambda x: filter_str.lower() in str(x[1]).lower(), self.full_data))
+        self.ui.table_customer.update_data(data=filtered_list, header=self.header)
+
+class ProductViewControler(Controller):
+    def __init__(self, root: SuperMarketManagerment) -> None:
+        super().__init__(root=root, popup=CustomerWindow())
     
-#     def setupslot(self):
-#         self.ui.btn_customer.toggled.connect(self.on_open_view)
-#         self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
-#         self.popup.inserted_record.connect(self.on_open_view)
-#         self.ui.table_customer.itemSelectionChanged.connect(self.view_detail)
-#         self.ui.btn_del_customer.clicked.connect(self.delete_current)
-#         self.ui.btn_update_customer.clicked.connect(self.update_current)
+    def setupslot(self):
+        self.ui.btn_product.toggled.connect(self.on_open_view)
+        self.ui.table_product.ui.table.itemSelectionChanged.connect(self.view_detail)
 
-#     def get_current_id(self):
-#         pass
+    def get_current_id(self):
+        selected_rows = self.ui.table_product.get_current_item()
+        if not selected_rows:
+            return None
+        id = selected_rows[0].text()
+        return id
 
-#     def on_open_view(self):
-#         pass
+    def on_open_view(self):
+        table = self.ui.table_product
+        filter_str = self.ui.txt_search_product.text()
+        filter_str.replace(' ', '')
+        header, result = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer as c WHERE LOWER(CONCAT(c.first_name, c.last_name)) LIKE \'%{filter_str}%\';')
+        table.update_data(data = result, header=header)
+        table.ui.table.setColumnWidth(0, 64)
+        self.ui.stack_content_pages.setCurrentIndex(3)
+        self.view_detail()
 
-#     def view_detail(self):
-#         pass
+    def view_detail(self):
+        pass
     
-#     def delete_current(self):
-#         pass
+    def delete_current(self):
+        pass
 
-#     def update_current(self):
-#         pass
+    def update_current(self):
+        pass
 
 # class OrderViewControler(Controller):
 #     def __init__(self, root: SuperMarketManagerment) -> None:
