@@ -1,10 +1,11 @@
 from UI.pop_up_staff import Ui_Dialog
 from UI.customer_popup import Ui_customer_popup
+from UI.supplyment_popup import Ui_SupplyProduct
 
 from Backend.DataBaseHandle import DataBase
 
 from PyQt6.QtWidgets import QDialog, QWidget, QDialogButtonBox, QMessageBox
-from PyQt6.QtCore import QDate, pyqtSignal
+from PyQt6.QtCore import QDate, pyqtSignal, QDateTime
 from datetime import date, datetime
 
 class AddRecordDialog(QDialog):
@@ -201,4 +202,37 @@ class CustomerWindow(AddRecordDialog):
         else:
             update_form = self.import_form()
             suc, msg = self.database.update_query('customer', self.cur_id, update_form)
+        return suc, msg
+    
+class ProductWindow(AddRecordDialog):
+    def __init__(self, parent: QWidget = None) -> None:
+        super().__init__(parent, Ui_SupplyProduct())
+        self.ui: Ui_SupplyProduct
+
+    def set_database(self, database: DataBase):
+        return super().set_database(database)
+    
+    def show_popup(self, info = None):
+        self.cur_id = str(info['product_id'])
+        self.ui.txt_title.setText(str(info['title']))
+        self.ui.txt_suplier.setText(str(info['supplier']))
+        self.ui.created_time.setDateTime(QDateTime.currentDateTime())
+        self.exec()
+
+    def import_form(self):
+        data = {}
+        data['product_id'] = self.cur_id
+        data['price_all'] = self.ui.txt_price
+        data['quantity'] = self.ui.txt_quantity
+        data['supplied_time'] = self.ui.created_time.time()
+        data['date'] = self.ui.created_time.date()
+
+    def querry_data(self):
+        suc = msg = None
+        confirm_dialog = QMessageBox.question(None, 'Confirm', 'Do you want to continue ?',  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
+        if confirm_dialog == QMessageBox.StandardButton.No:
+                return suc, msg
+        if self.cur_id > 0:
+            update_form = self.import_form()
+            suc, msg = self.database.insert_query('supply_history', update_form)
         return suc, msg

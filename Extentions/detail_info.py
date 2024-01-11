@@ -40,5 +40,32 @@ Purchased: {total_purchased}
 
 """
 
+product_format = """
+Product ID: {product_id}
+
+Title: {title}
+
+Supplier: {supplier}
+
+Price: {price}
+
+Quantity: {quantity_in_stock}
+
+Sold: {sold}
+
+Feedback:
+{feedback}
+"""
+
+order_format = """
+"""
+
+product_feedback = """
+**{customer} (cid:{customer_id}) 
+    commented at {create_time}:
+    - {comment}
+    - Rate {rating} points
+"""
 def export_data(format_str, info_dict):
     return format_str.format(**info_dict)
+

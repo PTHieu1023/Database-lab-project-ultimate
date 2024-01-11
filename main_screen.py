@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import *
 
 from Backend.DataBaseHandle import DataBase
-from UI.UI_Element_Controler import *
+from Backend import QuerrySet
 from UI.form_ui import Ui_main_screen
 from popup import *
 
@@ -12,28 +12,28 @@ class SuperMarketManagerment(QWidget):
         super().__init__(parent)
         self.ui = Ui_main_screen()
         self.ui.setupUi(self)
+        self.controllers = []
         self.general_view_controller = GeneralViewController(self)
         self.staff_view_controller = StaffViewController(self)
         self.customer_view_controller = CustomerViewControler(self)
+        self.product_view_controller = ProductViewControler(self)
         self.setupSlot()
         self.database: DataBase = None
     
     def setup_database(self, database):
         self.database = database
-        self.general_view_controller.set_database(database=database)
-        self.staff_view_controller.set_database(database=database)
-        self.customer_view_controller.set_database(database=database)
+        for controler in self.controllers:
+            controler.set_database(database)
 
     def setupSlot(self):
-        cui = self.ui
-        self.general_view_controller.setupSlot()
-        self.customer_view_controller.setupSlot()
-        self.staff_view_controller.setupSlot()
+        for controler in self.controllers:
+            controler.setupSlot()
 
 
 class Controller:
     def __init__(self, root, popup = None) -> None:
-        self.root = root
+        self.root: SuperMarketManagerment = root
+        self.root.controllers.append(self)
         self.popup = popup
         self.ui: Ui_main_screen = self.root.ui
         self.database = None
@@ -59,7 +59,7 @@ class GeneralViewController(Controller):
         query = self.ui.txt_query.toPlainText()
         header, values = self.database.select_query(query)
         if isinstance(header, list):
-            update_table(self.ui.table_result, result=values, header=header)
+            # update_table(self.ui.table_result, result=values, header=header)
             QMessageBox.information(self.root, "Information", f"Selected {len(values)}")
         elif header:
             QMessageBox.information(self.root, 'Information', values)
@@ -94,16 +94,7 @@ class StaffViewController(Controller):
         table = self.ui.table_staff
         filter_str = self.ui.txt_search_staff.text()
         filter_str.replace(' ', '')
-        self.header, self.staff_list = self.database.select_query(f"""
-            SELECT 
-                s.staff_id as "ID", CONCAT_WS(' ', s.first_name, s.last_name) as "NAME", 
-                r.role as "ROLE", s.salary AS "SALARY" 
-            FROM 
-                staff as s 
-            LEFT JOIN 
-                staff_role as r ON s.role = r.staff_role_id;
-        """)
-        # table.update_data(data=staff_list, header=header)
+        self.header, self.staff_list = self.database.select_query(QuerrySet.GET_ALL_STAFF)
         self.set_list()
         table.ui.table.setColumnWidth(0, 64)
         table.ui.table.setColumnWidth(1, 256)
@@ -116,13 +107,7 @@ class StaffViewController(Controller):
         if staff_id is None:
             self.ui.info_staff.setText('')
             return None
-        title, info = self.database.select_query(f"""
-            SELECT 
-	            s.staff_id, concat_ws(' ', s.first_name, s.last_name) as fname, s.dob, s.telephone,
-                r.role, s.salary, s.email, s.address, s.start_working_date, s.working_type, 
-                s.end_working_date
-            FROM staff as s LEFT JOIN staff_role as r ON r.staff_role_id = s.role
-            WHERE s.staff_id = {staff_id}""")
+        title, info = self.database.select_query(QuerrySet.GET_DETAIL_STAFF_BY_ID.format(id = staff_id))
         staff_info = dict(zip(title, info[0]))
         str_staff_info = export_data(staff_detail_format, staff_info)
         self.ui.info_staff.setText(str_staff_info)
@@ -155,12 +140,12 @@ class StaffViewController(Controller):
             QMessageBox.information(self.root, "Error", msg)
 
     def set_list(self):
-        filter_str = self.ui.txt_search_staff.text()
+        filter_str = self.ui.txt_search_staff.text().lower()
         filter_list = []
         if filter_str is None or filter_str == '':
             filter_list = self.staff_list
         else:
-            filter_list = list(filter(lambda x: filter_str in x[1], self.staff_list))
+            filter_list = list(filter(lambda x: filter_str in str(x[1]).lower(), self.staff_list))
         self.ui.table_staff.update_data(data=filter_list, header= self.header)
 
 class CustomerViewControler(Controller):
@@ -188,7 +173,7 @@ class CustomerViewControler(Controller):
         table = self.ui.table_customer
         filter_str = self.ui.txt_search_customer.text()
         filter_str.replace(' ', '')
-        self.header, self.full_data = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL",address as "ADDRESS", bonus_point as "POINT" FROM customer;')
+        self.header, self.full_data = self.database.select_query(QuerrySet.GET_ALL_CUSTOMER)
         self.set_list()
         table.ui.table.setColumnWidth(0, 64)
         table.ui.table.setColumnWidth(1, 160)
@@ -202,32 +187,7 @@ class CustomerViewControler(Controller):
         if id is None:
             self.ui.info_customer.setText('')
             return None
-        title, info = self.database.select_query(f"""
-            SELECT
-                c.customer_id,
-                CONCAT_WS(' ', c.first_name, c.last_name) AS full_name,
-                c.telephone,
-                c.email,
-                c.address,
-                c.bonus_point,
-                COUNT(b.bill_id) AS order_count,
-                COALESCE(SUM(b.total_pay), 0) AS total_purchased
-            FROM
-                customer AS c
-            LEFT JOIN (
-                SELECT
-                    bill.customer AS customer,
-                    bill.bill_id AS bill_id,
-                    SUM(bill_detail.price) AS total_pay
-                FROM
-                    bill
-                JOIN bill_detail ON bill.bill_id = bill_detail.bill_id
-                GROUP BY bill.bill_id
-            ) AS b ON b.customer = c.customer_id
-            WHERE c.customer_id = {id}
-            GROUP BY
-                c.customer_id
-        """)
+        title, info = self.database.select_query(QuerrySet.GET_DETAIL_CUSTOMER_BY_ID.format(id = id))
         info = dict(zip(title, info[0]))
         str_info = export_data(customer_format, info)
         self.ui.info_customer.setText(str_info)
@@ -267,11 +227,15 @@ class CustomerViewControler(Controller):
 
 class ProductViewControler(Controller):
     def __init__(self, root: SuperMarketManagerment) -> None:
-        super().__init__(root=root, popup=CustomerWindow())
+        super().__init__(root=root, popup=ProductWindow())
+        self.full_data = []
     
-    def setupslot(self):
+    def setupSlot(self):
         self.ui.btn_product.toggled.connect(self.on_open_view)
+        self.popup.inserted_record.connect(self.on_open_view)
         self.ui.table_product.ui.table.itemSelectionChanged.connect(self.view_detail)
+        self.ui.btn_update_product.clicked.connect(self.update_current)
+        self.ui.txt_search_product.textChanged.connect(self.set_list)
 
     def get_current_id(self):
         selected_rows = self.ui.table_product.get_current_item()
@@ -284,20 +248,44 @@ class ProductViewControler(Controller):
         table = self.ui.table_product
         filter_str = self.ui.txt_search_product.text()
         filter_str.replace(' ', '')
-        header, result = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer as c WHERE LOWER(CONCAT(c.first_name, c.last_name)) LIKE \'%{filter_str}%\';')
-        table.update_data(data = result, header=header)
+        self.header, self.full_data = self.database.select_query(QuerrySet.GET_ALL_PRODUCT)
+        self.set_list()
         table.ui.table.setColumnWidth(0, 64)
-        self.ui.stack_content_pages.setCurrentIndex(3)
-        self.view_detail()
+        table.ui.table.setColumnWidth(1, 192)
+        table.ui.table.setColumnWidth(2, 96)
+        table.ui.table.setColumnWidth(3, 96)
+        self.ui.stack_content_pages.setCurrentIndex(2)
+        # self.view_detail()
 
     def view_detail(self):
-        pass
+        id = self.get_current_id()
+        if id is None:
+            self.ui.info_product.setText('')
+            return None
+        title, info = self.database.select_query(QuerrySet.GET_DETAIL_PRODUCT_BY_ID.format(id = id))
+        info = dict(zip(title, info[0]))
+        _, fb_list = self.database.select_query(QuerrySet.GET_PRODUCT_FEEDBACK_BY_ID.format(id = id))
+        feedbacks = [product_feedback.format(customer = fb[6], customer_id = fb[2], create_time = fb[5], rating = fb[4], comment = fb[3]) for fb in fb_list]
+        info['feedback'] = '\n'.join(feedbacks)
+        str_info = export_data(product_format, info)
+        self.ui.info_product.setText(str_info)
     
-    def delete_current(self):
-        pass
-
     def update_current(self):
-        pass
+        current_id = self.get_current_id()
+        if current_id is None:
+            QMessageBox.information(self.root, "Information", "No record selected.")
+            return
+        title, info = self.database.select_query(f"SELECT * FROM product WHERE product_id = {current_id};")
+        info = dict(zip(title, info[0]))
+        self.popup.show_popup(info = info)
+
+    def set_list(self):
+        filter_str = self.ui.txt_search_product.text()
+        if filter_str is None or filter_str == '':
+            self.ui.table_product.update_data(data=self.full_data, header=self.header)
+        filtered_list = list(filter(lambda x: filter_str.lower() in str(x[1]).lower(), self.full_data))
+        self.ui.table_product.update_data(data=filtered_list, header=self.header)
+
 
 # class OrderViewControler(Controller):
 #     def __init__(self, root: SuperMarketManagerment) -> None:
