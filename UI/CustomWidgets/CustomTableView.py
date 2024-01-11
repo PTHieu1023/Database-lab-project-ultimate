@@ -227,23 +227,15 @@ class CustomTableView(QtWidgets.QWidget):
         self.set_content()
     
     def set_content(self):
+        self.ui.table.clear()
         self.ui.lb_page.setText(f'/{self.number_of_page}')
         self.ui.lineEdit.setText(f'{self.current_page}')
         self.set_btn_state()
         start_content_index = (self.current_page - 1) * self.max_row_in_a_page
-        vheader = [str(i) for i in range(start_content_index, start_content_index + self.max_row_in_a_page)]
+        vheader = [str(i) for i in range(start_content_index + 1, start_content_index + self.max_row_in_a_page + 1)]
         self.ui.table.setVerticalHeaderLabels(vheader)
         self.ui.table.setColumnCount(len(self.header))
         self.ui.table.setHorizontalHeaderLabels(self.header)
-
-        # Set horizontal headers
-        for c_index, value in enumerate(self.header):
-            item = QTableWidgetItem()
-            item.setData(0, str(value))
-            self.ui.table.setHorizontalHeaderItem(c_index, item)
-
-        # Set content
-        self.ui.table.clear()
         size = len(self.data)
         for i in range(start_content_index, start_content_index + self.max_row_in_a_page):
             if i >= size:

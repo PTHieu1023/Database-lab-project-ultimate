@@ -188,9 +188,12 @@ class CustomerViewControler(Controller):
         table = self.ui.table_customer
         filter_str = self.ui.txt_search_customer.text()
         filter_str.replace(' ', '')
-        self.header, self.full_data = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL", bonus_point as "POINT" FROM customer;')
+        self.header, self.full_data = self.database.select_query(f'SELECT customer_id as "ID", CONCAT_WS(\' \', first_name, last_name) as "NAME", telephone as "TEL",address as "ADDRESS", bonus_point as "POINT" FROM customer;')
         self.set_list()
         table.ui.table.setColumnWidth(0, 64)
+        table.ui.table.setColumnWidth(1, 160)
+        table.ui.table.setColumnWidth(2, 96)
+        table.ui.table.setColumnWidth(3, 160)
         self.ui.stack_content_pages.setCurrentIndex(3)
         self.view_detail()
 
