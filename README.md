@@ -26,7 +26,8 @@
     - CRUD thông tin nhân viên
 ## III. Hướng dẫn sử dụng
 Ở thư mục repo -> sử dụng terminal
+(Yêu cầu đã cài đặt python 3.7 trở lên)
 1. Cài đặt thư viện
-    ** pip install PyQt6
+    ```pip install PyQt6```
 2. Chạy chương trình
-    ** python ./app.py
+    ```python ./app.py```
