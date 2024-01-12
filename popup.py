@@ -1,6 +1,7 @@
 from UI.pop_up_staff import Ui_Dialog
 from UI.customer_popup import Ui_customer_popup
 from UI.supplyment_popup import Ui_SupplyProduct
+from UI.add_order_popup import Ui_add_order_popup
 
 from Backend.DataBaseHandle import DataBase
 
@@ -216,6 +217,8 @@ class ProductWindow(AddRecordDialog):
         self.cur_id = info['product_id']
         self.ui.txt_title.setText(str(info['title']))
         self.ui.txt_suplier.setText(str(info['supplier']))
+        self.ui.txt_price.setText('')
+        self.ui.txt_quantity.setText('')
         self.ui.created_time.setDateTime(QDateTime.currentDateTime())
         self.exec()
 
@@ -237,3 +240,57 @@ class ProductWindow(AddRecordDialog):
             update_form = self.import_form()
             suc, msg = self.database.insert_query('supply_history', update_form)
         return suc, msg
+    
+class OrderWindow(AddRecordDialog):
+    def __init__(self, parent: QWidget = None) -> None:
+        super().__init__(parent, Ui_add_order_popup())
+        self.table_header = ['ID', 'Title', 'Price Unit', 'Quantity', 'Total']
+        self.ui.tableWidget.setColumnWidth(0, 32)
+        self.ui.tableWidget.setColumnWidth(1, 96)
+        self.ui.tableWidget.setColumnWidth(2, 48)
+        self.ui.tableWidget.setColumnWidth(3, 48)
+        self.ui: Ui_add_order_popup
+    
+    def set_database(self, database: DataBase):
+        return super().set_database(database) 
+    
+    def show_popup(self):
+        self.ui.txt_cus_id.setText()
+        self.ui.txt_saler.setText('')
+        self.ui.created_time.setDateTime(QDateTime.currentDateTime())
+        self.ui.table_product.clear()
+        self.ui.tableWidget.setHorizontalHeaderLabels(self.table_header)
+        self.ui.txt_discount.setText('')
+        self.ui.txt_paid.setText('')
+        self.exec()
+    
+    def import_form(self):
+        data = {}
+        data['create_time'] = self.ui.created_time.time().toString("hh:mm:ss")
+        data['customer'] = self.ui.txt_cus_id.text()
+        data['saler'] = self.ui.txt_saler.text()
+        data['discount'] = self.ui.txt_discount.text()
+        data['customer_paid'] = self.ui.txt_paid.text()
+        data['day'] = self.ui.created_time.date().toString("yyyy-MM-dd")
+        return data
+    
+    def query_data(self):
+        suc = msg = None
+        confirm_dialog = QMessageBox.question(None, 'Confirm', 'Do you want to continue ?',  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
+        if confirm_dialog == QMessageBox.StandardButton.No:
+                return suc, msg
+        if self.cur_id > 0:
+            update_form = self.import_form()
+            suc, msg = self.database.insert_query('bill', update_form)
+        if not suc:
+            return suc, msg
+        added_bill_id = int(msg.split['-'][1])
+        detail_table = self.ui.tableWidget
+        bill_details = []
+        for row in range(100):
+            detail_str = f'({added_bill_id},{int(detail_table.item(row=row, column=0).text())},{int(detail_table.item(row, 3).text())},{int(detail_table.item(row, 4).text())})'
+            bill_details.append(detail_str)
+        bill_details = ',\n'.join(bill_details)
+        bill_details += ';'
+        query = f'INSERT INTO bill_detail (bill_id, product_id, quantity, price) VALUES \n{bill_details}'
+        print(query)

@@ -24,15 +24,17 @@ class DataBase:
         keys_str = "(" + ", ".join(map(str, records.keys())) + ")"
         value_str = "(" + ", ".join(map(lambda key: f"'{key}'", records.values())) + ")"
         str_query = f"""INSERT INTO {table}{keys_str}\nVALUES\n{value_str};"""
+        last_inserted_id = None
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute(str_query)
+                last_inserted_id = cursor.lastrowid
                 self.connection.commit()
         except psycopg2.Error as e:
             self.connection.rollback()
             return False, str(e)
         else:
-            return True, 'Insertion successful!'
+            return True, f'Inserted -{last_inserted_id}- into {table}'
     
     def delete_query(self, table:str, **condition):
         conditions = (f"{key} = {value}" for key, value in condition.items())

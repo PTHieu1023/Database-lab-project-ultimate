@@ -37,10 +37,19 @@ order by
 """
 
 GET_ALL_ORDER = """
-SELECT
-    *
-FROM
-    bill
+select
+  b.bill_id as "Bill ID",
+  concat_ws(' ', b.day, b.create_time) as "Created time",
+  concat_ws(' ', c.first_name, c.last_name) as "Customer",
+  concat_ws(' ', s.first_name, s.last_name) as "Saler",
+  sum(bd.price) as "Total pay"
+from
+  bill as b
+  left join bill_detail as bd on b.bill_id = bd.bill_id
+  left join customer as c on b.customer = c.customer_id
+  left join staff as s on s.staff_id = b.saler
+group by b.bill_id, b.day, b.create_time, c.first_name, c.last_name, s.first_name, s.last_name
+order by b.bill_id asc;
 """
 
 #-----------------------------------------------------------------------------------------------------
@@ -108,6 +117,29 @@ group by
 """
 
 GET_DETAIL_ORDER_BY_ID = """
+select
+  b.bill_id as id,
+  concat_ws(' ', b.day, b.create_time) as created_time,
+  concat_ws(' ', c.first_name, c.last_name) as customer,
+  concat_ws(' ', s.first_name, s.last_name) as "saler",
+  sum(bd.price) as "total_pay",
+  b.customer_paid,
+  b.refund,
+  b.discount
+from
+  bill as b
+  left join bill_detail as bd on b.bill_id = bd.bill_id
+  left join customer as c on b.customer = c.customer_id
+  left join staff as s on s.staff_id = b.saler
+where b.bill_id = {id}
+group by
+  b.bill_id,
+  b.day,
+  b.create_time,
+  c.first_name,
+  c.last_name,
+  s.first_name,
+  s.last_name
 """
 
 #-----------------------------------------------------------------------------------------------------
@@ -124,4 +156,19 @@ where
   pf.product_id = {id}
 order by
   pf.created_date asc
+"""
+
+GET_ORDER_DETAIL_BY_ID = """
+select
+  bd.bill_id,
+  p.product_id,
+  p.title,
+  s.name as supplier,
+  bd.quantity,
+  bd.price
+from
+  bill_detail as bd
+  left join product as p on bd.product_id = p.product_id
+  left join supplier as s on s.supplier_id = p.supplier
+where bd.bill_id = {id}
 """

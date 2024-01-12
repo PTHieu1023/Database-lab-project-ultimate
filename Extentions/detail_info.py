@@ -58,6 +58,24 @@ Feedback:
 """
 
 order_format = """
+Bill Id: {id}
+
+Created time: {created_time}
+
+Customer: {customer}
+
+Saler: {saler}
+
+Total pay: {total_pay}
+
+Discount: {discount}
+
+Customer paid: {customer_paid}
+
+Refund: {refund}
+
+Products:
+{detail}
 """
 
 product_feedback = """
@@ -69,3 +87,10 @@ product_feedback = """
 def export_data(format_str, info_dict):
     return format_str.format(**info_dict)
 
+bill_detail = """
+-   Produc ID: {product_id}
+    Title: {title}
+    Supply by: {supplier}
+    Quantity: {quantity}
+    Price: {price}     
+"""

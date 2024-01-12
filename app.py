@@ -3,7 +3,6 @@ from PyQt6.QtWidgets import QApplication
 from main_screen import SuperMarketManagerment
 
 from Backend.DataBaseHandle import DataBase
-from UI import *
 
 class App:
     def __init__(self) -> None:

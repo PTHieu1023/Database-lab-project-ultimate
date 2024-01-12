@@ -17,6 +17,7 @@ class SuperMarketManagerment(QWidget):
         self.staff_view_controller = StaffViewController(self)
         self.customer_view_controller = CustomerViewControler(self)
         self.product_view_controller = ProductViewControler(self)
+        self.order_view_controller = OrderViewControler(self)
         self.setupSlot()
         self.database: DataBase = None
     
@@ -287,29 +288,52 @@ class ProductViewControler(Controller):
         self.ui.table_product.update_data(data=filtered_list, header=self.header)
 
 
-# class OrderViewControler(Controller):
-#     def __init__(self, root: SuperMarketManagerment) -> None:
-#         super().__init__(root=root, popup=CustomerWindow())
+class OrderViewControler(Controller):
+    def __init__(self, root: SuperMarketManagerment) -> None:
+        super().__init__(root=root, popup=OrderWindow())
     
-#     def setupslot(self):
-#         self.ui.btn_customer.toggled.connect(self.on_open_view)
-#         self.ui.btn_add_customer.clicked.connect(lambda:self.popup.show_popup())
-#         self.popup.inserted_record.connect(self.on_open_view)
-#         self.ui.table_customer.ui.table.itemSelectionChanged.connect(self.view_detail)
-#         self.ui.btn_del_customer.clicked.connect(self.delete_current)
-#         self.ui.btn_update_customer.clicked.connect(self.update_current)
+    def setupSlot(self):
+        self.ui.btn_order.toggled.connect(self.on_open_view)
+        self.ui.btn_add_order.clicked.connect(lambda:self.popup.show_popup())
+        self.popup.inserted_record.connect(self.on_open_view)
+        self.ui.table_order.ui.table.itemSelectionChanged.connect(self.view_detail)
 
-#     def get_current_id(self):
-#         pass
+    def get_current_id(self):
+        selected_rows = self.ui.table_order.get_current_item()
+        if not selected_rows:
+            return None
+        id = selected_rows[0].text()
+        return id
 
-#     def on_open_view(self):
-#         pass
+    def on_open_view(self):
+        table = self.ui.table_order
+        filter_str = self.ui.txt_search_order.text()
+        filter_str.replace(' ', '')
+        self.header, self.full_data = self.database.select_query(QuerrySet.GET_ALL_ORDER)
+        self.set_list()
+        table.ui.table.setColumnWidth(0, 64)
+        table.ui.table.setColumnWidth(1, 128)
+        table.ui.table.setColumnWidth(2, 128)
+        table.ui.table.setColumnWidth(3, 128)
+        self.ui.stack_content_pages.setCurrentIndex(1)
+        self.view_detail()
 
-#     def view_detail(self):
-#         pass
-    
-#     def delete_current(self):
-#         pass
+    def view_detail(self):
+        id = self.get_current_id()
+        if id is None:
+            self.ui.info_product.setText('')
+            return None
+        title, info = self.database.select_query(QuerrySet.GET_DETAIL_ORDER_BY_ID.format(id = id))
+        info = dict(zip(title, info[0]))
+        _, pd_list = self.database.select_query(QuerrySet.GET_ORDER_DETAIL_BY_ID.format(id = id))
+        products = [bill_detail.format(product_id = p[1], title = p[2], supplier = p[3], quantity = p[4], price =p[5]) for p in pd_list]
+        info['detail'] = '\n'.join(products)
+        str_info = export_data(order_format, info)
+        self.ui.info_order.setText(str_info)
 
-#     def update_current(self):
-#         pass
+    def set_list(self):
+        filter_str = self.ui.txt_search_product.text()
+        if filter_str is None or filter_str == '':
+            self.ui.table_order.update_data(data=self.full_data, header=self.header)
+        filtered_list = list(filter(lambda x: filter_str.lower() in str(x[1]).lower(), self.full_data))
+        self.ui.table_product.update_data(data=filtered_list, header=self.header)
