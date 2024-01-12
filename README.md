@@ -24,3 +24,9 @@
     - CRUD thông tin người dùng
 5. Quản lý nhân viên (Staff)
     - CRUD thông tin nhân viên
+## III. Hướng dẫn sử dụng
+Ở thư mục repo -> sử dụng terminal
+1. Cài đặt thư viện
+    ** pip install PyQt6
+2. Chạy chương trình
+    ** python ./app.py
