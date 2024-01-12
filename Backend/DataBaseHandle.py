@@ -23,12 +23,12 @@ class DataBase:
     def insert_query(self, table, records):
         keys_str = "(" + ", ".join(map(str, records.keys())) + ")"
         value_str = "(" + ", ".join(map(lambda key: f"'{key}'", records.values())) + ")"
-        str_query = f"""INSERT INTO {table}{keys_str}\nVALUES\n{value_str};"""
+        str_query = f"""INSERT INTO {table}{keys_str}\nVALUES\n{value_str} RETURNING {table}_id;"""
         last_inserted_id = None
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute(str_query)
-                last_inserted_id = cursor.lastrowid
+                last_inserted_id = cursor.fetchone()[0]
                 self.connection.commit()
         except psycopg2.Error as e:
             self.connection.rollback()

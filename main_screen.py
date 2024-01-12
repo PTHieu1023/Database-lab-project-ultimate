@@ -134,7 +134,7 @@ class StaffViewController(Controller):
         if confirm_dialog == QMessageBox.StandardButton.No:
             return
         suc, msg = self.database.delete_query('staff', staff_id = current_id)
-        self.on_open_staff_view()
+        self.on_open_view()
         if suc:
             QMessageBox.information(self.root, "Information", msg)
         else:

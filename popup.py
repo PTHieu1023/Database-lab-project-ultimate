@@ -5,8 +5,8 @@ from UI.add_order_popup import Ui_add_order_popup
 
 from Backend.DataBaseHandle import DataBase
 
-from PyQt6.QtWidgets import QDialog, QWidget, QDialogButtonBox, QMessageBox
-from PyQt6.QtCore import QDate, pyqtSignal, QDateTime
+from PyQt6.QtWidgets import QDialog, QWidget, QDialogButtonBox, QMessageBox, QTableWidgetItem
+from PyQt6.QtCore import QDate, pyqtSignal,pyqtSlot, QDateTime
 from datetime import date, datetime
 
 class AddRecordDialog(QDialog):
@@ -61,6 +61,7 @@ class AddRecordDialog(QDialog):
         self.cancel_button.clicked.connect(self.on_cancle_button_clicked)
 
     def on_ok_button_clicked(self):
+        print('confirmed')
         suc, msg = self.query_data()
         if suc is None:
             self.cur_id = -1
@@ -245,23 +246,31 @@ class OrderWindow(AddRecordDialog):
     def __init__(self, parent: QWidget = None) -> None:
         super().__init__(parent, Ui_add_order_popup())
         self.table_header = ['ID', 'Title', 'Price Unit', 'Quantity', 'Total']
+        self.ui: Ui_add_order_popup
         self.ui.tableWidget.setColumnWidth(0, 32)
         self.ui.tableWidget.setColumnWidth(1, 96)
         self.ui.tableWidget.setColumnWidth(2, 48)
         self.ui.tableWidget.setColumnWidth(3, 48)
-        self.ui: Ui_add_order_popup
+        self.setupSlot()
     
     def set_database(self, database: DataBase):
         return super().set_database(database) 
     
     def show_popup(self):
-        self.ui.txt_cus_id.setText()
+        self.ui.txt_cus_id.setText('')
         self.ui.txt_saler.setText('')
         self.ui.created_time.setDateTime(QDateTime.currentDateTime())
-        self.ui.table_product.clear()
+        self.ui.tableWidget.clear()
         self.ui.tableWidget.setHorizontalHeaderLabels(self.table_header)
-        self.ui.txt_discount.setText('')
-        self.ui.txt_paid.setText('')
+        self.ui.txt_discount.setText('0')
+        self.ui.txt_paid.setText('0')
+        _, list_prod = self.database.select_query("select product_id, title, output_price from product")
+        self.products = {}
+        for product in list_prod:
+            self.products[product[0]] = {
+                'title': product[1],
+                'output_price': product[2] 
+            }
         self.exec()
     
     def import_form(self):
@@ -279,18 +288,68 @@ class OrderWindow(AddRecordDialog):
         confirm_dialog = QMessageBox.question(None, 'Confirm', 'Do you want to continue ?',  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
         if confirm_dialog == QMessageBox.StandardButton.No:
                 return suc, msg
-        if self.cur_id > 0:
-            update_form = self.import_form()
-            suc, msg = self.database.insert_query('bill', update_form)
+        update_form = self.import_form()
+        suc, msg = self.database.insert_query('bill', update_form)
         if not suc:
             return suc, msg
-        added_bill_id = int(msg.split['-'][1])
+        added_bill_id = int(msg.split('-')[1])
         detail_table = self.ui.tableWidget
         bill_details = []
         for row in range(100):
-            detail_str = f'({added_bill_id},{int(detail_table.item(row=row, column=0).text())},{int(detail_table.item(row, 3).text())},{int(detail_table.item(row, 4).text())})'
-            bill_details.append(detail_str)
+            try:
+                detail_str = f'({added_bill_id},{int(detail_table.item(row, 0).text())},{int(detail_table.item(row, 3).text())},{int(detail_table.item(row, 4).text())})'
+                bill_details.append(detail_str)
+            except:
+                continue
         bill_details = ',\n'.join(bill_details)
         bill_details += ';'
         query = f'INSERT INTO bill_detail (bill_id, product_id, quantity, price) VALUES \n{bill_details}'
-        print(query)
+        suc, msg = self.database.query(query=query)
+        return suc, msg
+
+    @pyqtSlot(QTableWidgetItem)
+    def handleItemChange(self):
+        item = self.ui.tableWidget.selectedItems()[0]
+        self.ui.tableWidget.itemChanged.disconnect(self.handleItemChange)
+
+        row = item.row()
+        if row > 0 and (self.ui.tableWidget.item(row-1, 0) is None or self.ui.tableWidget.item(row-1, 0)) == '':
+            self.clearCurrentRow(row)
+            self.ui.tableWidget.itemChanged.connect(self.handleItemChange)
+            return
+        product_id_item = self.ui.tableWidget.item(row, 0)
+        if product_id_item is None or product_id_item.text() == '':
+            self.clearCurrentRow(row)
+            self.ui.tableWidget.itemChanged.connect(self.handleItemChange)
+            return
+        quantity_item = self.ui.tableWidget.item(row, 3)
+
+        if quantity_item is None or quantity_item.text() == '':
+            self.ui.tableWidget.setItem(row, 3,QTableWidgetItem('1'))
+            quantity_item = self.ui.tableWidget.item(row, 3)
+
+        product_id = int(product_id_item.text())
+        quantity = quantity_item.text()
+
+        price_per_unit = int(self.products[product_id]['output_price'])
+
+        total_price = int(quantity) * price_per_unit
+        self.ui.tableWidget.setItem(row, 1, QTableWidgetItem(self.products[product_id]['title']))
+        self.ui.tableWidget.setItem(row, 2, QTableWidgetItem(str(price_per_unit)))
+        self.ui.tableWidget.setItem(row, 4, QTableWidgetItem(str(total_price)))
+        total = 0
+        for i in range(100):
+            try:
+                total += int(self.ui.tableWidget.item(i, 4).text())
+            except:
+                break
+        self.ui.txt_total.setText(f'Total: {total}')
+        self.ui.tableWidget.itemChanged.connect(self.handleItemChange)
+    
+    def clearCurrentRow(self, row):
+        for i in range(5):
+            self.ui.tableWidget.setItem(row, i, QTableWidgetItem(''))
+
+    def setupSlot(self):
+        super().setupSlot()
+        self.ui.tableWidget.itemChanged.connect(self.handleItemChange)
